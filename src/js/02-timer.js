@@ -1,8 +1,7 @@
-// Importăm flatpickr și stilul asociat
+
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
-// Funcția pentru calcularea timpului rămas
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
@@ -17,11 +16,9 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
-
 
 const datetimePicker = document.getElementById('datetime-picker');
 const startButton = document.querySelector('[data-start]');
@@ -29,7 +26,6 @@ const timerDays = document.querySelector('[data-days]');
 const timerHours = document.querySelector('[data-hours]');
 const timerMinutes = document.querySelector('[data-minutes]');
 const timerSeconds = document.querySelector('[data-seconds]');
-
 
 const options = {
   enableTime: true,
@@ -47,18 +43,13 @@ const options = {
   },
 };
 
-
-
 flatpickr(datetimePicker, options);
 
-// Variabila pentru intervalul de numărătoare inversă
 let countdownInterval;
 
-// Funcție pentru a porni cronometrul
 function startCountdown(endTime) {
   const endDate = new Date(endTime).getTime();
 
-  // Actualizăm cronometrul la fiecare secundă
   countdownInterval = setInterval(() => {
     const now = new Date().getTime();
     const timeDifference = endDate - now;
@@ -74,7 +65,6 @@ function startCountdown(endTime) {
 
     const { days, hours, minutes, seconds } = convertMs(timeDifference);
 
-    // Actualizăm interfața cu timpul rămas
     timerDays.textContent = addLeadingZero(days);
     timerHours.textContent = addLeadingZero(hours);
     timerMinutes.textContent = addLeadingZero(minutes);
@@ -82,13 +72,11 @@ function startCountdown(endTime) {
   }, 1000);
 }
 
-// Adăugăm un event listener pentru butonul de start
 startButton.addEventListener('click', () => {
   const selectedDateTime = datetimePicker.value;
 
-  // Oprim numărătoarea inversă dacă rulează deja
   clearInterval(countdownInterval);
 
-  // Pornim numărătoarea inversă cu data selectată
+ 
   startCountdown(selectedDateTime);
 });
